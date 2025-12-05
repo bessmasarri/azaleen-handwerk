@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Mon Atelier - Azaleen Handwerk{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 md:px-8">
+
+    <!-- Dashboard Header -->
+    <div class="text-center mb-12 animate-float">
+        <div class="inline-block relative">
+            <span class="absolute -top-8 -left-8 text-5xl animate-bounce" style="animation-duration: 3s;">🧵</span>
+            <h1 class="text-5xl md:text-6xl font-serif text-brand-600 dark:text-brand-300 drop-shadow-sm rotate-1">
+                L'Atelier Créatif</h1>
+        </div>
+        <p
+            class="mt-4 text-brand-500 font-sans text-lg bg-white dark:bg-brand-900 inline-block px-6 py-2 rounded-full shadow-sm">
+            Gérez vos merveilles ici ✨
+        </p>
+    </div>
+
+    <!-- Layout Split -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
+
+        <!-- Column 1: Add New Item (Sticky) -->
+        <div class="lg:col-span-1">
+            <div
+                class="sticky top-24 max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-brand-200 scrollbar-track-transparent pr-2">
+                <div
+                    class="glass-card p-8 bg-white/90 dark:bg-brand-900/80 ring-4 ring-brand-50 dark:ring-brand-800 shadow-xl transition-all hover:shadow-2xl">
+                    <h2 class="text-2xl font-serif text-brand-600 dark:text-brand-200 mb-6 flex items-center gap-2">
+                        <span class="text-3xl">✨</span> Nouvelle Création
+                    </h2>
+
+                    <form method="post" enctype="multipart/form-data" class="space-y-6">
+                        {% csrf_token %}
+
+                        <!-- Title Field -->
+                        <div class="group">
+                            <label
+                                class="block text-sm font-bold text-brand-500 dark:text-brand-300 mb-2 ml-2 uppercase tracking-wide">Titre</label>
+                            {{ form.title }}
+                        </div>
+
+                        <!-- Description Field -->
+                        <div class="group">
+                            <label
+                                class="block text-sm font-bold text-brand-500 dark:text-brand-300 mb-2 ml-2 uppercase tracking-wide">Histoire
+                                (Optionnel)</label>
+                            {{ form.description }}
+                        </div>
+
+                        <!-- Image Field -->
+                        <div class="group">
+                            <label
+                                class="block text-sm font-bold text-brand-500 dark:text-brand-300 mb-2 ml-2 uppercase tracking-wide">Photo</label>
+                            <div class="relative group cursor-pointer hover:opacity-90 transition">
+                                {{ form.image }}
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-4 bg-brand-500 hover:bg-brand-600 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-brand-300/50 transition-all transform hover:-translate-y-1 mt-4 flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Ajouter à la Galerie
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2 & 3: Your Items Grid -->
+        <div class="lg:col-span-2">
+            <h2 class="text-3xl font-serif text-brand-500 dark:text-brand-300 mb-8 ml-4 flex items-center gap-3">
+                <span>📦</span> Vos Trésors
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {% for item in items %}
+                <div
+                    class="group relative bg-white dark:bg-brand-900 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-100 dark:border-brand-800 overflow-hidden hover:-translate-y-1">
+
+                    <!-- Image -->
+                    <div class="aspect-square overflow-hidden relative">
+                        <img src="{{ item.image.url }}" alt="{{ item.title }}"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+
+                        <!-- Overlay Actions (Visible on Hover) -->
+                        <div
+                            class="absolute inset-0 bg-brand-900/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                            <a href="{% url 'edit_item' item.pk %}"
+                                class="p-3 bg-white text-brand-600 rounded-full hover:bg-brand-50 hover:scale-110 transition shadow-lg tooltip"
+                                title="Modifier">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="{% url 'delete_item' item.pk %}"
+                                class="p-3 bg-brand-500 text-white rounded-full hover:bg-brand-600 hover:scale-110 transition shadow-lg tooltip"
+                                title="Supprimer">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                    </path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="p-6">
+                        <h3 class="font-serif text-xl text-brand-700 dark:text-brand-200 truncate mb-1">
+                            {{ item.title|default:"<span class='text-brand-300 italic'>Sans titre</span>" }}
+                        </h3>
+                        <p class="text-xs text-brand-400 uppercase tracking-widest font-bold">
+                            {{ item.created_at|date:"d M Y" }}
+                        </p>
+                    </div>
+                </div>
+                {% empty %}
+                <div
+                    class="col-span-full text-center py-20 px-6 bg-brand-50 rounded-[3rem] border-2 border-dashed border-brand-200">
+                    <span class="text-6xl block mb-4 filter grayscale opacity-50">🧶</span>
+                    <p class="text-xl text-brand-400 font-serif">L'atelier est vide pour le moment.</p>
+                    <p class="text-brand-300 mt-2">Utilisez le formulaire à gauche pour ajouter votre première merveille
+                        !</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

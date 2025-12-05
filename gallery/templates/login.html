@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion Créatrice - Azaleen Handwerk{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[70vh]">
+    <div class="animate-float w-full max-w-md p-4">
+
+        <!-- Carte de Connexion (Cozy Rounded) -->
+        <div
+            class="glass-card p-10 relative overflow-hidden bg-white/80 dark:bg-brand-900/80 shadow-2xl ring-4 ring-brand-100 dark:ring-brand-800">
+
+            <!-- Décoration -->
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-300/30 rounded-full blur-[40px]"></div>
+            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-brand-200/30 rounded-full blur-[40px]"></div>
+
+            <!-- Header -->
+            <div class="text-center mb-8 relative z-10">
+                <div
+                    class="inline-flex justify-center items-center w-20 h-20 bg-brand-100 dark:bg-brand-800 rounded-full mb-4 shadow-inner">
+                    <span class="text-4xl animate-pulse">🧶</span>
+                </div>
+                <h2 class="text-4xl font-serif text-brand-600 dark:text-brand-300 transform -rotate-2">Espace Secret
+                </h2>
+                <p class="text-brand-500 font-sans text-sm mt-2">Réservé à la créatrice</p>
+            </div>
+
+            <!-- Formulaire -->
+            <form method="post" class="space-y-5 relative z-10">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                <div
+                    class="p-4 bg-brand-50 dark:bg-brand-950/50 rounded-2xl border border-brand-300 text-sm text-brand-600 dark:text-brand-300 text-center font-bold">
+                    Oups ! Ce n'est pas la bonne clé. 🗝️
+                </div>
+                {% endif %}
+
+                <div class="group">
+                    <label for="id_username"
+                        class="block text-sm font-bold text-brand-600 dark:text-brand-300 mb-2 ml-4">Ton nom</label>
+                    <input type="text" name="username" autofocus required id="id_username"
+                        class="w-full px-6 py-4 rounded-full border-2 border-brand-100 dark:border-brand-700 bg-white dark:bg-brand-950 focus:ring-4 focus:ring-brand-200 focus:border-brand-300 dark:focus:ring-brand-800 transition dark:text-brand-100 placeholder-brand-300 text-lg"
+                        placeholder="Azaleen...">
+                </div>
+
+                <div class="group">
+                    <label for="id_password"
+                        class="block text-sm font-bold text-brand-600 dark:text-brand-300 mb-2 ml-4">Mot de passe
+                        secret</label>
+                    <input type="password" name="password" required id="id_password"
+                        class="w-full px-6 py-4 rounded-full border-2 border-brand-100 dark:border-brand-700 bg-white dark:bg-brand-950 focus:ring-4 focus:ring-brand-200 focus:border-brand-300 dark:focus:ring-brand-800 transition dark:text-brand-100 placeholder-brand-300 text-lg"
+                        placeholder="••••••••">
+                </div>
+
+                <button type="submit"
+                    class="w-full py-4 mt-6 bg-brand-500 hover:bg-brand-600 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl hover:shadow-brand-300/50 transition-all transform hover:-translate-y-1 font-sans">
+                    Ouvrir l'Atelier 🚪
+                </button>
+            </form>
+
+            <div class="mt-8 text-center relative z-10">
+                <a href="{% url 'home' %}"
+                    class="text-sm font-bold text-brand-400 hover:text-brand-600 transition flex items-center justify-center gap-2 bg-brand-50 dark:bg-brand-950 px-4 py-2 rounded-full inline-block mx-auto hover:bg-brand-100">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
