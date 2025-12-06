@@ -18,7 +18,7 @@
     </div>
 
     <!-- Masonry Grid -->
-    <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+    <div class="columns-2 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-8 space-y-4 sm:space-y-8">
         {% for item in images %}
         <div class="break-inside-avoid relative group rounded-[2rem] overflow-hidden bg-white/50 dark:bg-brand-800/50 hover:shadow-2xl hover:shadow-brand-300/30 transition-all duration-500 ease-out cursor-pointer hover:-rotate-1"
             onclick="openLightbox(this.querySelector('img').src, this.querySelector('img').dataset.title, this.querySelector('img').dataset.description)">
